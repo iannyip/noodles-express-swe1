@@ -5,6 +5,8 @@ import { read } from './jsonFileStorage.js';
 // Declare setup
 const PORT = 3004;
 const app = express();
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
 
 // Define callback function
 const whenIncomingRequest = (req, res) => {
@@ -75,6 +77,43 @@ app.get('/yield/:yieldNo', whenYieldRequest);
 
 // Create route/ middleware (more comfortable)
 app.get('/recipe-label/:labelName', whenRecipeRequest);
+
+// Create route/ middleware for categories
+app.get('/', (req, res) => {
+  console.log('generating category main page');
+  const categoryArray = [];
+  // read the data
+  read('data.json', (data) => {
+    for (let i = 0; i < data.recipes.length; i += 1){
+      if (data.recipes[i].category && !categoryArray.includes(data.recipes[i].category)){
+        categoryArray.push(data.recipes[i].category);
+      }
+    }
+    categoryArray.sort();
+    console.log(categoryArray);
+    res.render('main', {categoryArray});
+  })
+})
+
+app.get('/category/:catName', (req, res) => {
+  console.log('main page -> category page');
+  const {catName} = req.params;
+  const categoryObj = {
+    name: catName,
+    recipes: [],
+  }
+  read('data.json', (data) => {
+    // Add recipes of that category
+    for (let i = 0; i < data.recipes.length; i += 1){
+      if (data.recipes[i].category && data.recipes[i].category.toLowerCase() === catName){
+        categoryObj.recipes.push(data.recipes[i].label);
+      }
+    }
+    // Sort and render page
+    categoryObj.recipes.sort();
+    res.render("category", {categoryObj});
+  })
+})
 
 // Start the server
 app.listen(PORT);

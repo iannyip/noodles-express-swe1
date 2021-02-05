@@ -1,0 +1,12 @@
+<html>
+  <body>
+    <h1><%= categoryObj.name%></h1>
+    <ul>
+      <% categoryObj.recipes.forEach((recipe) => { %>
+      <% recipeLink = recipe.replace(/ /g, "-") %>
+
+      <li><a href="/"><%=recipe %></a></li>
+      <% });%>
+    </ul>
+  </body>
+</html>

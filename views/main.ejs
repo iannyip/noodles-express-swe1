@@ -1,0 +1,12 @@
+<html>
+  <body>
+    <h1>Recipe categories</h1>
+    <ol>
+      <% categoryArray.forEach((category) => { %>
+        <% categoryLink = category.toLowerCase() %>
+        <li><a href="/category/<%=categoryLink%>"><%=category.replace(/-/g, " ") %></a></li>
+      <% }); %>
+    </ol>
+  </body>
+</html>
+
