@@ -1,0 +1,9 @@
+<html>
+  <body>
+    <h1><%=recipe.label%></h1>
+    <% for (const [key, value] of Object.entries(recipe)) { %>
+    <h3><%= key %></h3>
+    <p><%= value %></p>
+    <% } %>
+  </body>
+</html>

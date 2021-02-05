@@ -18,7 +18,8 @@ const whenIncomingRequest = (req, res) => {
       res.status(404).send('Sorry, we cannot find that!');
     } else {
       const recipe = data.recipes[index];
-      res.send(recipe);
+      // res.send(recipe);
+      res.render('recipe', {recipe});
     }
   });
 };
@@ -106,11 +107,16 @@ app.get('/category/:catName', (req, res) => {
     // Add recipes of that category
     for (let i = 0; i < data.recipes.length; i += 1){
       if (data.recipes[i].category && data.recipes[i].category.toLowerCase() === catName){
-        categoryObj.recipes.push(data.recipes[i].label);
+        let tempRecipeObj = {
+          label: data.recipes[i].label,
+          index: i,
+        }
+        categoryObj.recipes.push(tempRecipeObj);
       }
     }
     // Sort and render page
-    categoryObj.recipes.sort();
+    // categoryObj.recipes.sort();
+    console.log(categoryObj);
     res.render("category", {categoryObj});
   })
 })
