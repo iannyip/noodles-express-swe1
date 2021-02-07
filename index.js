@@ -10,7 +10,7 @@ app.use(express.static('public'));
 
 // Define callback function
 const whenIncomingRequest = (req, res) => {
-  console.log('request came in');
+  console.log('recipe request came in');
 
   read('data.json', (data) => {
     const { index } = req.params;
@@ -118,6 +118,16 @@ app.get('/category/:catName', (req, res) => {
     // categoryObj.recipes.sort();
     console.log(categoryObj);
     res.render("category", {categoryObj});
+  })
+})
+
+app.get('/recipes', (req, res) => {
+  console.log('generating list of all recipes');
+  const recipeListArr = [];
+  // read the data
+  read('data.json', (data) => {
+    console.log(data.recipes.length);
+    res.render('recipe-list', data);
   })
 })
 

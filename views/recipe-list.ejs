@@ -18,22 +18,32 @@
         </ul>
       </div>
     </nav>
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <h1><%= categoryObj.name%></h1>
-        </div>
-        <div class="col-12">
+    <nav class="container">
+      <nav class="row">
+        <% const colLen = recipes.length / 3 %>
+        <nav class= "col-md-4">
           <ul class="list-unstyled">
-            <% categoryObj.recipes.forEach((recipe) => { %>
-            <!-- <% recipeLink = recipe.label.replace(/ /g, "-").toLowerCase() %> -->
-
-            <li><a href="/recipe/<%= recipe.index %>"><%=recipe.label %></a></li>
-            <% });%>
+            <% for (let i =0; i < colLen; i += 1) { %>
+              <li><a href="/recipe/<%= i %>"><%= recipes[i].label %></a></li>
+            <% }%>
           </ul>
-        </div>
-      </div>
-    </div>
-    
+        </nav>
+        <nav class= "col-md-4">
+          <ul class="list-unstyled">
+            <% for (let i = Math.floor(colLen + 1); i < colLen * 2; i += 1) { %>
+              <li><a href="/recipe/<%= i %>"><%= recipes[i].label %></a></li>
+            <% }%>
+          </ul>
+        </nav>
+        <nav class= "col-md-4">
+          <ul class="list-unstyled">
+            <% for (let i =Math.floor(colLen * 2 + 1); i < recipes.length; i += 1) { %>
+              <li><a href="/recipe/<%= i %>"><%= recipes[i].label %></a></li>
+            <% }%>
+          </ul>
+        </nav>
+      </nav>
+    </nav>
+
   </body>
 </html>
